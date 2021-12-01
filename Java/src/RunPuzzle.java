@@ -1,6 +1,6 @@
 
 import day1.*;
-import org.junit.jupiter.api.BeforeEach;
+
 
 public class RunPuzzle {
     public static void main(String[] args) {
