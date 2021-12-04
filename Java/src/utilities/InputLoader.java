@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -12,26 +11,22 @@ public class InputLoader {
     private static Scanner sc;
     private static File file;
 
-    public static Object[] asArray(int dayNo) {
-        List<Integer> input = new ArrayList<>();
-        file = new File("src/day" + dayNo + "/input.txt");
-
+    public static int[] intArray(int dayNo, boolean getSample){
+        String folder = getSample ? "sample" : "input";
         try {
-            sc = new Scanner(file);
-            while (sc.hasNextLine()) {
-                input.add(Integer.parseInt(sc.nextLine()));
-            }
-
+            List<String> lines = Files.readAllLines(Path.of("../Data/"+ folder +"/day" + dayNo +".txt"));
+            return lines.stream().mapToInt(Integer::parseInt).toArray();
         }
         catch (IOException e) {
             System.out.println("Error: " + e.getMessage());
         }
-        return input.toArray();
+        return null;
     }
 
-    public static List<String> asList(int dayNo) {
+    public static List<String> list(int dayNo, boolean getSample) {
+        String folder = getSample ? "sample" : "input";
         try {
-            List<String> lines = Files.readAllLines(Path.of("src/day" + dayNo + "/input.txt"));
+            List<String> lines = Files.readAllLines(Path.of("../Data/"+ folder +"/day" + dayNo +".txt"));
             return lines;
         }
         catch (IOException e) {
@@ -40,9 +35,10 @@ public class InputLoader {
         return null;
     }
 
-    public static String asString(int dayNo) {
+    public static String string(int dayNo, boolean getSample) {
+        String folder = getSample ? "sample" : "input";
         try {
-            String content = Files.readString(Path.of("src/day" + dayNo + "/input.txt"));
+            String content = Files.readString(Path.of("../Data/"+ folder +"/day" + dayNo +".txt"));
             return content;
         }
         catch (IOException e) {
@@ -51,15 +47,5 @@ public class InputLoader {
         return null;
     }
 
-    public static String sample(int dayNo) {
-        try {
-            String content = Files.readString(Path.of("src/day" + dayNo + "/sample.txt"));
-            return content;
-        }
-        catch (IOException e) {
-            System.out.println("Error: " + e.getMessage());
-        }
-        return null;
-    }
 
 }
